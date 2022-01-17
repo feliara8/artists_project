@@ -7,4 +7,5 @@ class Song < ApplicationRecord
   validates :track_number, :duration, numericality: { greater_than: 0 }
   validates :track_number, uniqueness: { scope: :album_id,
                                          message: 'should only exist one track number per album' }
+  has_one_attached :featured_image
 end

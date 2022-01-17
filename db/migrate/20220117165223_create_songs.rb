@@ -6,6 +6,7 @@ class CreateSongs < ActiveRecord::Migration[6.1]
       t.string :name
       t.integer :duration
       t.string :genre
+      t.string :featured_image_text
       t.integer :track_number
 
       t.timestamps

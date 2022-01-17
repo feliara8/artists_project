@@ -42,4 +42,25 @@ describe 'POST artists/', type: :request do
       expect(response.status).to eq(400)
     end
   end
+
+  context 'bulk operation with albums' do
+    let(:album_attributes) do
+      [{
+        name: 'dookie',
+        released_at: '1999-12-12'
+      }]
+    end
+
+    let(:params) do
+      {
+        name: name,
+        born_at: born_at,
+        albums_attributes: album_attributes
+      }
+    end
+
+    it 'add albums along with the artist creation' do
+      expect { subject }.to change(Album, :count).by(1)
+    end
+  end
 end

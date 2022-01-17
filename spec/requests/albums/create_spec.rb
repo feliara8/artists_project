@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'POST artists/:artist_id/albums/', type: :request do
-  let(:artist) { create(:artist, name: 'Green Day') }
+  let!(:artist) { create(:artist, name: 'Green Day') }
   let(:album) { Album.last }
   subject { post artist_albums_path(artist.id), params: params, as: :json }
 
@@ -51,6 +51,31 @@ describe 'POST artists/:artist_id/albums/', type: :request do
     it 'does return bad request' do
       subject
       expect(response.status).to eq(400)
+    end
+  end
+
+  context 'bulk operations' do
+    let(:song_attributes) do
+      [{
+        name: 'basket case',
+        track_number: 1,
+        duration: 60
+      }]
+    end
+
+    let(:params) do
+      {
+        album: {
+          name: name,
+          released_at: released_at,
+          artist_id: artist.id,
+          songs_attributes: song_attributes
+        }
+      }
+    end
+
+    it 'add songs along with the album creation' do
+      expect { subject }.to change(Song, :count).by(1)
     end
   end
 end

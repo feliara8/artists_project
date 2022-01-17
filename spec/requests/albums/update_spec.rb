@@ -30,4 +30,44 @@ describe 'PUT artists/:artist_id/albums/:album_id', type: :request do
     expect(json[:album][:id]).to eq(album.id)
     expect(json[:album][:name]).to eq(name)
   end
+
+  context 'bulk operations' do
+    let(:song_attributes) do
+      [{
+        name: 'basket case',
+        track_number: 1,
+        duration: 60
+      }]
+    end
+
+    let(:params) do
+      {
+        album: {
+          name: name,
+          released_at: released_at,
+          artist_id: artist.id,
+          songs_attributes: song_attributes
+        }
+      }
+    end
+
+    it 'add songs along with the album update' do
+      expect { subject }.to change(Song, :count).by(1)
+    end
+
+    context 'removing songs' do
+      let!(:song) { create(:song, name: 'basket case', duration: 60, track_number: 1, album_id: album.id) }
+      let(:song_attributes) do
+        [{
+          id: song.id,
+          _destroy: 'true'
+        }]
+      end
+
+      it 'removes the song along with the album update' do
+        subject
+        expect(Song.count).to eq(0)
+      end
+    end
+  end
 end
