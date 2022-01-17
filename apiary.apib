@@ -1,0 +1,62 @@
+FORMAT: 1A
+
+# Artists Project
+
+## Albums Collection [/albums]
+
+
+### Create a Album [POST]
+
+
++ Request (application/json)
+
+        {
+            "album": {
+                "name": "Some name",
+                "released_at": "1999-12-12"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "album": {
+                    "id": 1,
+                    "name": "some_name",
+                    "released_at":  "1999-12-12"
+                }
+            }
+
+## Update and Delete albums [/albums/:id]
+
+### Delete album [DELETE]
+
++ Request (application/json)
+
++ Response 204
+
+### Update Album [PUT]
+
+
++ Request (application/json)
+
+        {
+            "album": {
+                "name": "other name",
+                "released_at": "1999-12-12"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "album": {
+                    "id": 1,
+                    "name": "_name",
+                    "released_at":  "1999-12-12"
+                }
+            }
