@@ -2,10 +2,174 @@ FORMAT: 1A
 
 # Artists Project
 
-## Albums Collection [/albums]
+## Artists Collection [/artists]
+
+### Fetch an artist with full details [GET]
+
++ Request (application/json)
 
 
-### Create a Album [POST]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "artist": {
+                    "id": 1,
+                    "name": "Green Day",
+                    "born_at":  "1987-01-01"
+                    "albums": [{
+                      "name": "Dookie",
+                      "released_at": "1999-12-12"
+                     }]
+                }
+            }
+
+### Create an artist [POST]
+
+
++ Request (application/json)
+
+        {
+            "artist": {
+                "name": "Green Day",
+                "born_at": "1987-01-01"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "artist": {
+                    "id": 1,
+                    "name": "Green Day",
+                    "born_at":  "1987-01-01"
+                }
+            }
+
+### Create an artist with bulk albums [POST]
+
+
++ Request (application/json)
+
+        {
+            "artist": {
+                "name": "Green Day",
+                "born_at": "1987-01-01",
+                "albums_attributes": [{
+                   "name": "Dookie",
+                   "released_at": "1999-12-12"
+                }]
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "artist": {
+                    "id": 1,
+                    "name": "Green Day",
+                    "born_at":  "1987-01-01"
+                }
+            }
+
+## Update and Delete artists [/artists/:artist_id/]
+
+### Delete artist [DELETE]
+
++ Request (application/json)
+
++ Response 204
+
+### Update artist [PUT]
+
+
++ Request (application/json)
+
+        {
+            "artist": {
+                "name": "Offspring",
+                "born_at": "1999-12-12"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "artist": {
+                    "id": 1,
+                    "name": "Offspring",
+                    "born_at":  "1999-12-12"
+                }
+            }
+
+### update an artist and editing or deleting its albums[POST]
+
+
++ Request (application/json)
+
+        {
+            "artist": {
+                "albums_attributes": [{
+                   "id": 1
+                   "name": "Dookie",
+                   "released_at": "1999-12-12"
+                },
+                {
+                  "id": 2,
+                  "_destroy": "1"
+                }]
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "artist": {
+                    "id": 1,
+                    "name": "Green Day",
+                    "born_at":  "1987-01-01"
+                }
+            }
+
+## Albums Collection [/artists/:artist_id/albums]
+
+### Fetch an album with full details [GET]
+
++ Request (application/json)
+
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "album": {
+                    "id": 1,
+                    "name": "Dookie",
+                    "released_at":  "1987-01-01",
+                    "artist": {
+                      "name": "Green Day",
+                      "born_at": "1987-12-12"
+                    },
+                    "songs": [{
+                      "id": 1,
+                      "name": "basket case",
+                      "track_number": 1,
+                      "duration": "1:00",
+                     }]
+                }
+            }
+
+### Create an Album [POST]
 
 
 + Request (application/json)
@@ -28,8 +192,36 @@ FORMAT: 1A
                     "released_at":  "1999-12-12"
                 }
             }
+            
+### Create an album with bulk songs [POST]
 
-## Update and Delete albums [/albums/:id]
+
++ Request (application/json)
+
+        {
+            "album": {
+                "name": "Dookie",
+                "songs_attributes": [{
+                   "name": "basket case",
+                   "duration": 60,
+                   "track_number": 1
+                }]
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "album": {
+                    "id": 1,
+                    "name": "Dookie",
+                    "released_at": "1999-12-12"
+                }
+            }
+
+## Update and Delete albums [/artists/:artist_id/albums/:id]
 
 ### Delete album [DELETE]
 
@@ -60,3 +252,119 @@ FORMAT: 1A
                     "released_at":  "1999-12-12"
                 }
             }
+            
+### update an album and editing or deleting its songs[POST]
+
+
++ Request (application/json)
+
+        {
+            "album": {
+                "songs_attributes": [{
+                   "id": 1
+                   "name": "basket case v2",
+                },
+                {
+                  "id": 2,
+                  "_destroy": "1"
+                }]
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "album": {
+                    "id": 1,
+                    "name": "Dookie",
+                    "released_at":  "1999-01-01"
+                }
+            }
+
+## Songs Collection [/artists/:artist_id/albums/:album_id/songs]
+
+### Fetch a song with full details [GET]
+
++ Request (application/json)
+
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "song": {
+                    "id": 1,
+                    "name": "Green Day",
+                    "born_at":  "1987-01-01"
+                    "albums": [{
+                      "name": "Dookie",
+                      "released_at": "1999-12-12"
+                     }]
+                }
+            }
+
+### Create a song [POST]
+
+
++ Request (application/json)
+
+        {
+            "song": {
+                "name": "Basket Case",
+                "track_number": 1,
+                "duration": 60
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "song": {
+                    "id": 1,
+                    "name": "Basket Case",
+                    "track_number": 1,
+                    "duration": "1:00",
+                    "album": {
+                      "name": "Dookie",
+                      "released_at": "1999-12-12" 
+                    }
+                }
+            }
+
+## Update and Delete songs [/artists/:artist_id/albums/:album_id/songs]
+
+### Delete song [DELETE]
+
++ Request (application/json)
+
++ Response 204
+
+### Update song [PUT]
+
+
++ Request (application/json)
+
+        {
+            "song": {
+                "name": "Wake me up when september ends"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "song": {
+                    "id": 1,
+                    "name": "Wake me up when september ends",
+                    "track_number":  3,
+                    "duration": "1:20"
+                }
+            }
+
