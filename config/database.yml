@@ -20,4 +20,5 @@ test:
 
 production:
   <<: *default
-  database: artists
+  url: <%= ENV['DATABASE_URL'] %>
+ 
