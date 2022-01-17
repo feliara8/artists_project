@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 json.song do
-  json.partial! 'song', song: @song
+  json.partial! 'song', song: @song.decorate
   json.album do
     json.partial! 'albums/album', album: @song.album
   end

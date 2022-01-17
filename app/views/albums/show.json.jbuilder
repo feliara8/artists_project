@@ -6,6 +6,6 @@ json.album do
     json.partial! 'artists/artist', artist: @album.artist
   end
   json.songs do
-    json.partial! 'songs/song', collection: @album.songs, as: :song
+    json.partial! 'songs/song', collection: @album.songs.map(&:decorate), as: :song
   end
 end

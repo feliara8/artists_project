@@ -7,4 +7,8 @@ class SongDecorator < Draper::Decorator
   def featured_image_url
     rails_blob_path(object.featured_image, only_path: true)
   end
+
+  def duration
+    Time.at(object.duration).strftime('%M:%S')
+  end
 end
